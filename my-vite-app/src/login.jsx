@@ -61,13 +61,14 @@ function Login() {
           <div className="col-lg-5 col-md-7">
             <div className="card border-0 shadow-sm rounded-3">
               <div className="card-body p-5">
-                <div className="text-center mb-4">
+                <div className="text-center mb-4 flex flex-column align-items-center">
                   <img 
                     src="/src/assets/images/01-logo-dark.svg" 
                     alt="My Diet Meal Plan Logo" 
                     className="mb-3"
                     style={{ height: "50px" }}
                   />
+                  <p className="text-5xl fw-bold text-success">Optifit</p>
                   <h2 className="fw-bold text-success">Welcome Back</h2>
                   <p className="text-secondary">Login to your account</p>
                 </div>
