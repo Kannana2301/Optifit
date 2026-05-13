@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="283" height="238" viewBox="0 0 283 238">
+    <defs>
+        <filter id="0cumkje54a" width="252.8%" height="229.6%" x="-76.4%" y="-62.2%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <filter id="8wz46wotwc" width="252.8%" height="229.6%" x="-76.4%" y="-62.2%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <filter id="1j2jgdq0te" width="252.8%" height="229.6%" x="-76.4%" y="-62.2%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <filter id="r8yk0jq52g" width="252.8%" height="229.6%" x="-76.4%" y="-62.2%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <path id="6ea8mkrkrb" d="M11.664 0h42.768c6.442 0 11.664 5.222 11.664 11.664v54.6c0 6.442-5.222 11.664-11.664 11.664H11.664C5.222 77.928 0 72.706 0 66.264v-54.6C0 5.222 5.222 0 11.664 0z"/>
+        <path id="zm0dxs43wd" d="M11.664 0h42.768c6.442 0 11.664 5.222 11.664 11.664v54.6c0 6.442-5.222 11.664-11.664 11.664H11.664C5.222 77.928 0 72.706 0 66.264v-54.6C0 5.222 5.222 0 11.664 0z"/>
+        <path id="czaoe7lgef" d="M11.664 0h42.768c6.442 0 11.664 5.222 11.664 11.664v54.6c0 6.442-5.222 11.664-11.664 11.664H11.664C5.222 77.928 0 72.706 0 66.264v-54.6C0 5.222 5.222 0 11.664 0z"/>
+        <path id="4rqfkqi5mh" d="M11.664 0h42.768c6.442 0 11.664 5.222 11.664 11.664v54.6c0 6.442-5.222 11.664-11.664 11.664H11.664C5.222 77.928 0 72.706 0 66.264v-54.6C0 5.222 5.222 0 11.664 0z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(11 18)">
+        <circle cx="130" cy="111" r="95" fill="#000" fill-opacity=".03"/>
+        <rect width="260" height="220" rx="18"/>
+        <g>
+            <g transform="translate(22 13) translate(75)">
+                <use fill="#000" filter="url(#0cumkje54a)" xlink:href="#6ea8mkrkrb"/>
+                <use fill="#FFF" xlink:href="#6ea8mkrkrb"/>
+                <text fill="#1B1E35" font-family="OpenSans-Semibold, Open Sans" font-size="11.664" font-weight="500">
+                    <tspan x="10.534" y="19.776">Calories</tspan>
+                </text>
+                <text fill="#1B1E35" font-family="OpenSans-Bold, Open Sans" font-size="15.552" font-weight="bold">
+                    <tspan x="14.562" y="54.048">1750</tspan>
+                </text>
+            </g>
+            <g transform="translate(22 13) translate(0 86)">
+                <use fill="#000" filter="url(#8wz46wotwc)" xlink:href="#zm0dxs43wd"/>
+                <use fill="#FFF" xlink:href="#zm0dxs43wd"/>
+                <g>
+                    <path fill="#83BD27" d="M8.748 0h17.496c4.831 0 8.748 3.917 8.748 8.748 0 4.831-3.917 8.748-8.748 8.748H8.748C3.917 17.496 0 13.579 0 8.748 0 3.917 3.917 0 8.748 0z" transform="translate(15.552 48.656)"/>
+                    <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="9.72" font-weight="bold" transform="translate(15.552 48.656)">
+                        <tspan x="7.982" y="11.944">20%</tspan>
+                    </text>
+                </g>
+                <text fill="#1B1E35" font-family="OpenSans-Semibold, Open Sans" font-size="11.664" font-weight="500">
+                    <tspan x="12.534" y="19.776">Protein</tspan>
+                </text>
+                <text fill="#1B1E35" font-family="OpenSans-Bold, Open Sans" font-size="15.552" font-weight="bold">
+                    <tspan x="19.548" y="42.272">90g</tspan>
+                </text>
+            </g>
+            <g transform="translate(22 13) translate(75 86)">
+                <use fill="#000" filter="url(#1j2jgdq0te)" xlink:href="#czaoe7lgef"/>
+                <use fill="#FFF" xlink:href="#czaoe7lgef"/>
+                <g>
+                    <path fill="#F99D00" d="M8.748 0h17.496c4.831 0 8.748 3.917 8.748 8.748 0 4.831-3.917 8.748-8.748 8.748H8.748C3.917 17.496 0 13.579 0 8.748 0 3.917 3.917 0 8.748 0z" transform="translate(15.552 48.656)"/>
+                    <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="9.72" font-weight="bold" transform="translate(15.552 48.656)">
+                        <tspan x="7.982" y="11.944">50%</tspan>
+                    </text>
+                </g>
+                <text fill="#1B1E35" font-family="OpenSans-Semibold, Open Sans" font-size="11.664" font-weight="500">
+                    <tspan x="16.548" y="19.776">Carbs</tspan>
+                </text>
+                <text fill="#1B1E35" font-family="OpenSans-Bold, Open Sans" font-size="15.552" font-weight="bold">
+                    <tspan x="15.048" y="42.272">229g</tspan>
+                </text>
+            </g>
+            <g transform="translate(22 13) translate(150 86)">
+                <use fill="#000" filter="url(#r8yk0jq52g)" xlink:href="#4rqfkqi5mh"/>
+                <use fill="#FFF" xlink:href="#4rqfkqi5mh"/>
+                <g>
+                    <path fill="#B56BE8" d="M8.748 0h17.496c4.831 0 8.748 3.917 8.748 8.748 0 4.831-3.917 8.748-8.748 8.748H8.748C3.917 17.496 0 13.579 0 8.748 0 3.917 3.917 0 8.748 0z" transform="translate(15.552 48.656)"/>
+                    <text fill="#FFF" font-family="OpenSans-Bold, Open Sans" font-size="9.72" font-weight="bold" transform="translate(15.552 48.656)">
+                        <tspan x="7.982" y="11.944">30%</tspan>
+                    </text>
+                </g>
+                <text fill="#1B1E35" font-family="OpenSans-Semibold, Open Sans" font-size="11.664" font-weight="500">
+                    <tspan x="23.562" y="19.776">Fat</tspan>
+                </text>
+                <text fill="#1B1E35" font-family="OpenSans-Bold, Open Sans" font-size="15.552" font-weight="bold">
+                    <tspan x="19.548" y="42.272">61g</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

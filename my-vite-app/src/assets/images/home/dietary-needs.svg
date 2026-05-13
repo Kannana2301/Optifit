@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="279" height="220" viewBox="0 0 279 220">
+    <defs>
+        <filter id="ymie4dh5ea" width="253%" height="214.8%" x="-76.5%" y="-55.1%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <filter id="hw8qmzefrc" width="253%" height="214.8%" x="-76.5%" y="-55.1%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <filter id="xskp4kk8we" width="253%" height="214.8%" x="-76.5%" y="-55.1%" filterUnits="objectBoundingBox">
+            <feOffset dy="2" in="SourceAlpha" result="shadowOffsetOuter1"/>
+            <feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="16.5"/>
+            <feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0365220717 0"/>
+        </filter>
+        <rect id="6ok28tkhzb" width="66" height="88" x=".5" y=".5" rx="15"/>
+        <rect id="kcxy437avd" width="66" height="88" x=".5" y=".5" rx="15"/>
+        <rect id="zsb12tcp3f" width="66" height="88" x=".5" y=".5" rx="15"/>
+        <path id="709o74uoag" d="M18.554 27.139c10.247 0 18.553-10.267 18.553-13.57C37.107 10.267 28.801 0 18.554 0 8.307 0 0 10.267 0 13.57c0 3.302 8.307 13.569 18.554 13.569z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd" transform="translate(13)">
+        <rect width="260" height="220" rx="18"/>
+        <circle cx="130" cy="111" r="95" fill="#000" fill-opacity=".03"/>
+        <g transform="translate(20 46)">
+            <use fill="#000" filter="url(#ymie4dh5ea)" xlink:href="#6ok28tkhzb"/>
+            <use fill="#FFF" xlink:href="#6ok28tkhzb"/>
+            <g>
+                <path fill="#D8D8D8" fill-opacity="0" d="M0 0H48.594V48.594H0z" transform="translate(9 8)"/>
+                <g>
+                    <path fill="#83BD27" d="M13.41 0c6.852 9.074 10.68 16.107 11.485 21.098.02.126.04.254.057.383-7.03 4.35-10.8 10.257-11.75 15.847-.44-1.703-.742-3.481-.905-5.332-.439-4.96-.112-13.02.979-24.18-4.047 20.256-4.047 32.749 0 37.48.265.31.518.6.758.87-3.585-.069-7.285-2.629-11.102-7.681C-3.203 30.365.29 17.536 13.411 0z" transform="translate(9 8) translate(5.67 .81)"/>
+                    <path fill="#9DD93F" d="M39.685 18.628s-.643 9.278-2.116 13.637c-3.456 10.226-10.92 13.945-20.495 13.9.682-1.428 1.487-2.832 2.416-4.212 2.781-4.13 8.107-10.189 15.978-18.175-10.16 8.435-17.038 15.446-20.634 21.033-3.974-8.817 2.922-23.524 24.851-26.183z" transform="translate(9 8) translate(5.67 .81)"/>
+                </g>
+            </g>
+            <g transform="translate(24 62)">
+                <rect width="16" height="16" fill="#90C444" rx="7"/>
+                <path fill="#FFF" fill-rule="nonzero" d="M7.527 11.68c-.454.426-1.19.426-1.643 0L3.34 9.293c-.453-.426-.453-1.116 0-1.542.453-.426 1.189-.426 1.642 0l1.516 1.423c.115.107.3.107.415 0l4.105-3.854c.453-.425 1.189-.425 1.642 0 .218.205.34.482.34.771 0 .29-.122.567-.34.77l-5.133 4.82z"/>
+            </g>
+        </g>
+        <g transform="translate(93 63)">
+            <use fill="#000" filter="url(#hw8qmzefrc)" xlink:href="#kcxy437avd"/>
+            <use fill="#FFF" xlink:href="#kcxy437avd"/>
+            <g>
+                <path d="M0 0H53.914V53.914H0z" transform="translate(7 6)"/>
+                <g>
+                    <path fill="#CEC9BA" d="M9.898 29.027c.112 2.186.93 5.008 2.7 5.801l-1.27 1.268c1.534 1.65 1.497 4.24-.108 5.844-.821.82-1.9 1.231-2.979 1.231-1.079 0-2.157-.41-2.979-1.232-.757-.758-1.184-1.752-1.22-2.808-1.057-.037-2.051-.462-2.81-1.22C.438 37.115 0 36.058 0 34.93c0-1.124.438-2.181 1.233-2.977 1.556-1.554 4.244-1.597 5.846-.108z" transform="translate(7 6) translate(4.493 5.391)"/>
+                    <path fill="#FFC119" d="M39.098 4.077c5.434 5.434 5.434 14.279 0 19.715-3.968 3.968-17.063 10.257-23.88 10.257-2.513 0-3.537-3.64-3.537-6.039.212-6.925 2.272-18.502 7.702-23.933 5.434-5.436 14.279-5.434 19.715 0zM37.933 9.72c-.212-.382-.692-.525-1.075-.31-.38.21-.52.692-.31 1.073 1.552 2.81.498 4.894.448 4.994-.206.382-.065.86.317 1.066.12.067.25.098.378.098.281 0 .552-.148.694-.414l.006-.012.043-.084c.255-.534 1.308-3.133-.501-6.411z" transform="translate(7 6) translate(4.493 5.391)"/>
+                </g>
+            </g>
+        </g>
+        <g transform="translate(166 94)">
+            <use fill="#000" filter="url(#xskp4kk8we)" xlink:href="#zsb12tcp3f"/>
+            <use fill="#FFF" xlink:href="#zsb12tcp3f"/>
+            <g transform="translate(9 8)">
+                <path fill="#D8D8D8" fill-opacity="0" d="M0 0H48.522V48.522H0z"/>
+                <path fill="#4FB7E2" d="M5.373 15.2l5.743 4.53c-1.84 2.22-2.9 4.307-2.9 5.518 0 1.091.859 2.89 2.372 4.857l-5.215 4.113c-.947.747-2.32.585-3.066-.362-.45-.57-.587-1.326-.366-2.017 1.119-3.5 1.678-5.877 1.678-7.13 0-1.253-.56-3.63-1.678-7.13-.367-1.148.267-2.377 1.415-2.744.692-.22 1.447-.084 2.017.366z"/>
+                <g transform="translate(9.88 11.68)">
+                    <use fill="#6BD3FF" xlink:href="#709o74uoag"/>
+                </g>
+                <ellipse cx="36.575" cy="22.155" fill="#FFF" rx="2.183" ry="2.224"/>
+            </g>
+        </g>
+        <rect width="16" height="16" x="119" y="125" fill="#E9EBF1" rx="7"/>
+        <path fill="#9EA6BB" d="M130.536 129.464c.39.391.39 1.024 0 1.415L128.414 133l2.122 2.121c.39.39.39 1.024 0 1.415-.391.39-1.024.39-1.415 0L127 134.414l-2.121 2.122c-.39.39-1.024.39-1.415 0-.39-.391-.39-1.024 0-1.415l2.122-2.121-2.122-2.121c-.39-.39-.39-1.024 0-1.415.391-.39 1.024-.39 1.415 0l2.121 2.122 2.121-2.122c.39-.39 1.024-.39 1.415 0z"/>
+    </g>
+</svg>
