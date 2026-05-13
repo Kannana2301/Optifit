@@ -35,6 +35,12 @@ function Dashboard() {
       {data && (
         <>
           <section className="op-hero">
+            <img
+              className="op-hero-bg"
+              src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80"
+              alt=""
+              loading="lazy"
+            />
             <div>
               <p className="op-kicker">Today</p>
               <h1>{data.user.name}'s fitness dashboard</h1>

@@ -223,6 +223,23 @@ body {
   border-radius: 8px;
   background: linear-gradient(135deg, #FF5F00, #FF8C00 48%, #FFD400);
   color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.op-hero-bg {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.op-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .op-hero h1,
@@ -612,6 +629,143 @@ body {
 
 .op-read {
   opacity: 0.62;
+}
+
+.op-img-exercise,
+.op-img-meal {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.op-img-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.op-img-progress {
+  width: 80px;
+  height: 80px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid var(--op-border);
+}
+
+.op-img-full {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+.op-avatar-placeholder {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--op-brand), var(--op-brand-mid));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.op-avatar-placeholder svg {
+  width: 44px;
+  height: 44px;
+}
+
+.op-list-item-with-img {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--op-border);
+}
+
+.op-list-item-with-img:last-child {
+  border-bottom: 0;
+}
+
+.op-coach-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--op-brand);
+  flex-shrink: 0;
+}
+
+.op-coach-avatar-placeholder {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--op-brand), var(--op-brand-mid));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+}
+
+.op-coach-avatar-placeholder svg {
+  width: 32px;
+  height: 32px;
+}
+
+.op-notif-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+
+.op-notif-water { background: #3b82f6; color: #fff; }
+.op-notif-workout { background: #f97316; color: #fff; }
+.op-notif-meal { background: #22c55e; color: #fff; }
+.op-notif-achievement { background: #eab308; color: #fff; }
+
+.op-stat-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--op-brand);
+  margin-bottom: 0.25rem;
+}
+
+.op-img-row {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.op-img-fallback {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  background: linear-gradient(135deg, var(--op-brand-mid), var(--op-brand));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 600;
+}
+
+:root[data-theme="dark"] .op-img-exercise,
+:root[data-theme="dark"] .op-img-thumb,
+:root[data-theme="dark"] .op-img-progress {
+  border-color: var(--op-border);
 }
 
 .op-loading {

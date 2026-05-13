@@ -77,6 +77,22 @@ function Progress() {
             <strong>{String(entry.tracked_on).slice(0, 10)}</strong>
             <span>{entry.weight || "-"} kg · Waist {entry.waist || "-"} cm · {entry.calories_burned} kcal burned</span>
             <p>{entry.notes}</p>
+            {(entry.before_image || entry.after_image) && (
+              <div className="op-img-row">
+                {entry.before_image && (
+                  <div>
+                    <small>Before</small>
+                    <img className="op-img-progress" src={entry.before_image.startsWith("http") ? entry.before_image : `${api.defaults.baseURL}${entry.before_image}`} alt="Before" loading="lazy" onError={(e) => { e.target.style.display = "none"; }} />
+                  </div>
+                )}
+                {entry.after_image && (
+                  <div>
+                    <small>After</small>
+                    <img className="op-img-progress" src={entry.after_image.startsWith("http") ? entry.after_image : `${api.defaults.baseURL}${entry.after_image}`} alt="After" loading="lazy" onError={(e) => { e.target.style.display = "none"; }} />
+                  </div>
+                )}
+              </div>
+            )}
             <div className="op-upload-row">
               <input className="form-control" type="file" accept="image/*" onChange={(e) => setUploads({ ...uploads, [`${entry.id}-before`]: e.target.files?.[0] })} />
               <button className="btn btn-outline-success btn-sm" onClick={() => uploadImage(entry, "before")}>Upload before</button>

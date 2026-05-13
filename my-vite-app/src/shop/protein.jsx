@@ -121,6 +121,7 @@ const Protein = () => {
   return (
     <div
       style={{
+        background: "linear-gradient(135deg, #2563eb, #7c3aed, #db2777)",
         minHeight: "100vh",
         padding: "2rem",
         color: "white",

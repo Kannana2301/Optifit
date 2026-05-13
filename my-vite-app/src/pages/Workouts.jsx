@@ -79,7 +79,14 @@ function Workouts() {
             </article>
           ))}</section>
           <section className="op-card"><h2>Exercise library</h2>{searchedExercises.map((exercise) => (
-            <article className="op-list-item" key={exercise.id}>
+            <article className="op-list-item-with-img" key={exercise.id}>
+              <img
+                className="op-img-exercise"
+                src={exercise.image_url || `https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80`}
+                alt={exercise.name}
+                loading="lazy"
+                onError={(e) => { e.target.style.display = "none"; }}
+              />
               <div><strong>{exercise.name}</strong><p>{exercise.instructions}</p><small>{exercise.muscle_group} · {exercise.equipment}</small></div>
               {exercise.youtube_url && <a className="btn btn-outline-success btn-sm" href={exercise.youtube_url} target="_blank" rel="noreferrer">Tutorial</a>}
             </article>

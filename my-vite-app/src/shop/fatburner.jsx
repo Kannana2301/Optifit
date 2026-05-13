@@ -55,7 +55,7 @@ const fatburner = () => {
   return (
     <div
       style={{
-         // Green background
+        background: "linear-gradient(135deg, #dc2626, #ea580c, #f97316)",
         minHeight: "100vh",
         padding: "2rem",
         color: "white",
@@ -81,12 +81,18 @@ const fatburner = () => {
                 className="card h-100"
                 style={{ backgroundColor: "white", color: "black", border: "none" }}
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="card-img-top"
-                  style={{ height: "250px", objectFit: "cover" }}
-                />
+                <div style={{ height: "250px", overflow: "hidden", position: "relative" }}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="card-img-top"
+                    style={{ height: "250px", objectFit: "cover", width: "100%" }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1550572017-edd951b55104?w=600&q=80";
+                    }}
+                  />
+                </div>
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{product.name}</h5>
                   <p className="card-text">{product.description}</p>

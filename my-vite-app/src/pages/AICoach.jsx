@@ -60,7 +60,18 @@ function AICoach() {
 
   return (
     <AppLayout>
-      <div className="op-page-head"><h1>AI fitness coach</h1><p>Personalized coaching, generated workouts, and generated meal plans.</p></div>
+      <div className="op-page-head d-flex align-items-center gap-3">
+        <img
+          className="op-coach-avatar"
+          src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80"
+          alt="AI Coach"
+          loading="lazy"
+        />
+        <div>
+          <h1>AI fitness coach</h1>
+          <p>Personalized coaching, generated workouts, and generated meal plans.</p>
+        </div>
+      </div>
       {error && <div className="alert alert-danger">{error}</div>}
       <div className="op-grid op-grid-2">
         <section className="op-card">

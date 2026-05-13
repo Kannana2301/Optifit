@@ -193,7 +193,14 @@ function AdminManage() {
               </form>
             </motion.section>
             <section className="op-card"><h2>Exercise library</h2>{exercises.map((item) => (
-              <article className="op-list-item" key={item.id}>
+              <article className="op-list-item-with-img" key={item.id}>
+                <img
+                  className="op-img-thumb"
+                  src={item.image_url || `https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80`}
+                  alt={item.name}
+                  loading="lazy"
+                  onError={(e) => { e.target.style.display = "none"; }}
+                />
                 <div><strong>{item.name}</strong><p>{item.instructions}</p><small>{item.muscle_group} · {item.difficulty} · {item.equipment}</small></div>
                 <div className="op-actions">
                   <button className="btn btn-outline-dark btn-sm" onClick={() => { setExerciseForm({ ...blankExercise, ...item }); setEditing({ type: "exercise", id: item.id }); }}>Edit</button>

@@ -61,13 +61,25 @@ function Signup() {
   };
 
   return (
-    <div className="bg-light min-vh-100 d-flex align-items-center">
+    <div
+      className="min-vh-100 d-flex align-items-center"
+      style={{
+        background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1461896836934-bd45ba8fcf9b?w=1200&q=80') center/cover fixed`,
+      }}
+    >
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-6 col-md-8">
-            <div className="card border-0 shadow-sm rounded-3">
+            <div className="card border-0 shadow-sm rounded-3" style={{ backdropFilter: "blur(12px)", background: "rgba(255,255,255,0.92)" }}>
               <div className="card-body p-5">
-                <h2 className="text-center fw-bold text-success mb-4">Create Your Account</h2>
+                <div className="text-center mb-4">
+                  <img
+                    src="/src/assets/images/01-logo-dark.svg"
+                    alt="OptiFit Logo"
+                    style={{ height: "50px" }}
+                  />
+                  <h2 className="fw-bold text-success mt-3">Create Your Account</h2>
+                </div>
                 
                 {submitStatus === 'success' && (
                   <div className="alert alert-success">

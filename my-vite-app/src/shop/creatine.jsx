@@ -85,12 +85,18 @@ const Creatine = () => {
                   overflow: "hidden",
                 }}
               >
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="card-img-top"
-                  style={{ height: "250px", objectFit: "cover" }}
-                />
+                <div style={{ height: "250px", overflow: "hidden", position: "relative" }}>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="card-img-top"
+                    style={{ height: "250px", objectFit: "cover", width: "100%" }}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=600&q=80";
+                    }}
+                  />
+                </div>
                 <div className="card-body d-flex flex-column">
                   <h5
                     className="card-title"

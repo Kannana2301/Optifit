@@ -50,7 +50,13 @@ function MealPlanner() {
       </div>
       <div className="op-grid op-grid-2 mt-4">
         <section className="op-card"><h2>Meal cards</h2>{meals.map((meal) => (
-          <article className="op-list-item" key={meal.id}>
+          <article className="op-list-item-with-img" key={meal.id}>
+            <img
+              className="op-img-meal"
+              src={`https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80`}
+              alt={meal.name}
+              loading="lazy"
+            />
             <div><strong>{meal.name}</strong><p>{meal.ingredients}</p><small>{meal.meal_type} · {meal.calories} kcal · P{meal.protein} C{meal.carbs} F{meal.fat}</small></div>
             <button className="btn btn-success btn-sm" onClick={() => schedule(meal)}>Schedule</button>
           </article>
