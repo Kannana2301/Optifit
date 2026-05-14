@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import api from './api/client';
 import { useNavigate } from 'react-router-dom';
+import logoSvg from "./assets/images/01-logo-dark.svg";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -63,7 +64,7 @@ function Login() {
               <div className="card-body p-5">
                 <div className="text-center mb-4 flex flex-column align-items-center">
                   <img 
-                    src="/src/assets/images/01-logo-dark.svg" 
+                    src={logoSvg}
                     alt="My Diet Meal Plan Logo" 
                     className="mb-3"
                     style={{ height: "50px" }}

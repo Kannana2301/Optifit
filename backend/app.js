@@ -13,7 +13,12 @@ const { User, DietPlan } = require("./models");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(",")
+    : ["http://localhost:5173", "http://127.0.0.1:5173", "https://optifit-omega.vercel.app"],
+  credentials: true
+}));
 app.use(express.json({ limit: "5mb" }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
