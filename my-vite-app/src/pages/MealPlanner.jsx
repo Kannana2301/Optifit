@@ -6,17 +6,22 @@ function MealPlanner() {
   const [plan, setPlan] = useState(null);
   const [filters, setFilters] = useState({ diet: "", allergy: "" });
   const [meals, setMeals] = useState([]);
+  const [scheduledMeals, setScheduledMeals] = useState([]);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const load = async () => {
     try {
       setError("");
-      const [recommendations, mealRows] = await Promise.all([
+      setSuccess("");
+      const [recommendations, mealRows, scheduleRows] = await Promise.all([
         api.get("/api/meal-planner/recommendations"),
-        api.get("/api/meals", { params: filters })
+        api.get("/api/meals", { params: filters }),
+        api.get("/api/meal-planner/schedule")
       ]);
       setPlan(recommendations.data);
       setMeals(mealRows.data);
+      setScheduledMeals(scheduleRows.data);
     } catch (err) {
       setError("Unable to load meal planner data.");
     }
@@ -26,15 +31,21 @@ function MealPlanner() {
 
   const schedule = async (meal) => {
     try {
-      await api.post("/api/meal-planner/schedule", { meal_id: meal.id, plan_date: new Date().toISOString().slice(0, 10), scheduled_time: "12:30" });
+      setError("");
+      setSuccess("");
+      await api.post("/api/meal-planner/schedule", { meal_id: meal._id, plan_date: new Date().toISOString().slice(0, 10), scheduled_time: "12:30" });
+      setSuccess("Meal scheduled successfully!");
+      load();
     } catch (err) {
-      setError("Unable to schedule meal.");
+      const message = err.response?.data?.error || err.message || "Unable to schedule meal.";
+      setError(message);
     }
   };
 
   return (
     <AppLayout>
       <div className="op-page-head"><h1>Meal planner</h1><p>Calorie targets, macros, scheduling, filters, allergy handling, and grocery list.</p></div>
+      {success && <div className="alert alert-success">{success}</div>}
       {error && <div className="alert alert-danger">{error}</div>}
       {plan && <div className="op-grid op-grid-4">
         <div className="op-card op-stat"><span>Calories</span><strong>{plan.calories}</strong></div>
@@ -50,7 +61,7 @@ function MealPlanner() {
       </div>
       <div className="op-grid op-grid-2 mt-4">
         <section className="op-card"><h2>Meal cards</h2>{meals.map((meal) => (
-          <article className="op-list-item-with-img" key={meal.id}>
+          <article className="op-list-item-with-img" key={meal._id}>
             <img
               className="op-img-meal"
               src={`https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=200&q=80`}
@@ -61,7 +72,15 @@ function MealPlanner() {
             <button className="btn btn-success btn-sm" onClick={() => schedule(meal)}>Schedule</button>
           </article>
         ))}</section>
-        <section className="op-card"><h2>Grocery list</h2>{plan?.groceryList.map((item) => <span className="op-chip" key={item}>{item}</span>)}</section>
+        <section className="op-card"><h2>Grocery list</h2>{plan?.groceryList.map((item) => <span className="op-chip" key={item}>{item}</span>)}
+          <hr />
+          <h2>Scheduled meals</h2>
+          {scheduledMeals.length === 0 ? <p className="text-muted">No meals scheduled yet.</p> : scheduledMeals.map((item) => (
+            <article className="op-list-item" key={item._id}>
+              <div><strong>{item.meal_id?.name || "Meal"}</strong><small>{item.plan_date ? String(item.plan_date).slice(0, 10) : ""} · {item.scheduled_time || "No time"}</small></div>
+            </article>
+          ))}
+        </section>
       </div>
     </AppLayout>
   );

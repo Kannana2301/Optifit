@@ -58,7 +58,7 @@ function Notifications() {
         <section className="op-card">
           <h2>Reminder center</h2>
           {items.map((item) => (
-            <article className={`op-list-item-with-img ${item.is_read ? "op-read" : ""}`} key={item.id}>
+              <article className={`op-list-item-with-img ${item.is_read ? "op-read" : ""}`} key={item._id}>
               <div className={`op-notif-icon op-notif-${item.type}`}>
                 {item.type === "water" && (
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ width: 18, height: 18 }}>
@@ -82,7 +82,7 @@ function Notifications() {
                 )}
               </div>
               <div><strong>{item.title}</strong><p>{item.message}</p><small>{item.type} · {item.remind_at ? String(item.remind_at).slice(0, 16) : "No schedule"}</small></div>
-              {!item.is_read && <button className="btn btn-outline-success btn-sm" onClick={() => markRead(item.id)}>Read</button>}
+              {!item.is_read && <button className="btn btn-outline-success btn-sm" onClick={() => markRead(item._id)}>Read</button>}
             </article>
           ))}
         </section>

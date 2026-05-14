@@ -34,12 +34,12 @@ function Progress() {
   const chartData = [...entries].reverse().map((entry) => ({ date: entry.tracked_on, weight: entry.weight }));
 
   const uploadImage = async (entry, imageType) => {
-    const file = uploads[`${entry.id}-${imageType}`];
+    const file = uploads[`${entry._id}-${imageType}`];
     if (!file) return;
     try {
       const formData = new FormData();
       formData.append("image", file);
-      formData.append("progress_id", entry.id);
+      formData.append("progress_id", entry._id);
       formData.append("image_type", imageType);
       await api.post("/api/progress/image", formData, { headers: { "Content-Type": "multipart/form-data" } });
       load();
@@ -73,7 +73,7 @@ function Progress() {
       <section className="op-card mt-4">
         <h2>Historical timeline</h2>
         {entries.map((entry) => (
-          <article className="op-timeline" key={entry.id}>
+          <article className="op-timeline" key={entry._id}>
             <strong>{String(entry.tracked_on).slice(0, 10)}</strong>
             <span>{entry.weight || "-"} kg · Waist {entry.waist || "-"} cm · {entry.calories_burned} kcal burned</span>
             <p>{entry.notes}</p>
@@ -94,9 +94,9 @@ function Progress() {
               </div>
             )}
             <div className="op-upload-row">
-              <input className="form-control" type="file" accept="image/*" onChange={(e) => setUploads({ ...uploads, [`${entry.id}-before`]: e.target.files?.[0] })} />
+              <input className="form-control" type="file" accept="image/*" onChange={(e) => setUploads({ ...uploads, [`${entry._id}-before`]: e.target.files?.[0] })} />
               <button className="btn btn-outline-success btn-sm" onClick={() => uploadImage(entry, "before")}>Upload before</button>
-              <input className="form-control" type="file" accept="image/*" onChange={(e) => setUploads({ ...uploads, [`${entry.id}-after`]: e.target.files?.[0] })} />
+              <input className="form-control" type="file" accept="image/*" onChange={(e) => setUploads({ ...uploads, [`${entry._id}-after`]: e.target.files?.[0] })} />
               <button className="btn btn-outline-success btn-sm" onClick={() => uploadImage(entry, "after")}>Upload after</button>
             </div>
           </article>

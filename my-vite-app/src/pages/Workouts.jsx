@@ -39,7 +39,7 @@ function Workouts() {
 
   const completeWorkout = async (workout) => {
     try {
-      await api.post("/api/workouts/complete", { workout_id: workout.id, duration_minutes: workout.estimated_minutes, calories_burned: workout.estimated_minutes * 7 });
+      await api.post("/api/workouts/complete", { workout_id: workout._id, duration_minutes: workout.estimated_minutes, calories_burned: workout.estimated_minutes * 7 });
       load();
     } catch (err) {
       setError("Unable to complete workout.");
@@ -48,6 +48,10 @@ function Workouts() {
 
   const createCustom = async (event) => {
     event.preventDefault();
+    if (!custom.title.trim()) {
+      setError("Workout title is required.");
+      return;
+    }
     try {
       await api.post("/api/workouts/custom", custom);
       setCustom({ title: "", scheduled_date: "" });
@@ -73,13 +77,13 @@ function Workouts() {
       {loading ? <LoadingState /> : (
         <div className="op-grid op-grid-2 mt-4">
           <section className="op-card"><h2>Weekly plans</h2>{workouts.map((workout) => (
-            <article className="op-list-item" key={workout.id}>
+            <article className="op-list-item" key={workout._id}>
               <div><strong>{workout.title}</strong><p>{workout.description}</p><small>{workout.day_of_week} · {workout.difficulty} · {workout.estimated_minutes} min</small></div>
               <button className="btn btn-success btn-sm" onClick={() => completeWorkout(workout)}>Complete</button>
             </article>
           ))}</section>
           <section className="op-card"><h2>Exercise library</h2>{searchedExercises.map((exercise) => (
-            <article className="op-list-item-with-img" key={exercise.id}>
+            <article className="op-list-item-with-img" key={exercise._id}>
               <img
                 className="op-img-exercise"
                 src={exercise.image_url || `https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80`}
@@ -99,7 +103,7 @@ function Workouts() {
               <button className="btn btn-success">Create</button>
             </form>
           </section>
-          <section className="op-card"><h2>History</h2>{history.map((log) => <div className="op-history" key={log.id}><strong>{log.title}</strong><span>{log.duration_minutes} min · {log.calories_burned} kcal</span></div>)}</section>
+          <section className="op-card"><h2>History</h2>{history.map((log) => <div className="op-history" key={log._id}><strong>{log.title}</strong><span>{log.duration_minutes} min · {log.calories_burned} kcal</span></div>)}</section>
         </div>
       )}
     </AppLayout>

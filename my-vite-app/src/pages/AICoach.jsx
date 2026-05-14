@@ -83,7 +83,7 @@ function AICoach() {
           {answer && <p className="op-ai-answer">{answer}</p>}
           <div className="op-history-list">
             {history.map((item) => (
-              <article className="op-history" key={item.id}>
+              <article className="op-history" key={item._id}>
                 <strong>{item.prompt}</strong>
                 <span>{item.response}</span>
               </article>

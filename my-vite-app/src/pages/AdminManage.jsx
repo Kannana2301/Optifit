@@ -78,7 +78,7 @@ function AdminManage() {
 
   const selectedExerciseNames = useMemo(() => {
     const ids = new Set(workoutForm.exercise_ids.map(String));
-    return exercises.filter((item) => ids.has(String(item.id))).map((item) => item.name).join(", ");
+    return exercises.filter((item) => ids.has(String(item._id))).map((item) => item.name).join(", ");
   }, [exercises, workoutForm.exercise_ids]);
 
   const notify = (message, type = "success") => setToast({ message, type });
@@ -91,7 +91,7 @@ function AdminManage() {
         await api.put(`/api/exercises/${exerciseId}`, exerciseForm);
       } else {
         const response = await api.post("/api/exercises", exerciseForm);
-        exerciseId = response.data.id;
+        exerciseId = response.data._id;
       }
       if (uploadFile && exerciseId) {
         const formData = new FormData();
@@ -193,7 +193,7 @@ function AdminManage() {
               </form>
             </motion.section>
             <section className="op-card"><h2>Exercise library</h2>{exercises.map((item) => (
-              <article className="op-list-item-with-img" key={item.id}>
+              <article className="op-list-item-with-img" key={item._id}>
                 <img
                   className="op-img-thumb"
                   src={item.image_url || `https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80`}
@@ -203,8 +203,8 @@ function AdminManage() {
                 />
                 <div><strong>{item.name}</strong><p>{item.instructions}</p><small>{item.muscle_group} · {item.difficulty} · {item.equipment}</small></div>
                 <div className="op-actions">
-                  <button className="btn btn-outline-dark btn-sm" onClick={() => { setExerciseForm({ ...blankExercise, ...item }); setEditing({ type: "exercise", id: item.id }); }}>Edit</button>
-                  <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem("exercise", item.id)}>Delete</button>
+                  <button className="btn btn-outline-dark btn-sm" onClick={() => { setExerciseForm({ ...blankExercise, ...item }); setEditing({ type: "exercise", id: item._id }); }}>Edit</button>
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem("exercise", item._id)}>Delete</button>
                 </div>
               </article>
             ))}</section>
@@ -228,7 +228,7 @@ function AdminManage() {
                 <textarea className="form-control op-span-2" placeholder="Description" value={workoutForm.description} onChange={(e) => setWorkoutForm({ ...workoutForm, description: e.target.value })} />
                 <div className="op-check-grid op-span-2">
                   {exercises.map((exercise) => (
-                    <label key={exercise.id}><input type="checkbox" checked={workoutForm.exercise_ids.map(String).includes(String(exercise.id))} onChange={() => toggleWorkoutExercise(exercise.id)} /> {exercise.name}</label>
+                    <label key={exercise._id}><input type="checkbox" checked={workoutForm.exercise_ids.map(String).includes(String(exercise._id))} onChange={() => toggleWorkoutExercise(exercise._id)} /> {exercise.name}</label>
                   ))}
                 </div>
                 <small className="op-span-2 text-muted">Assigned: {selectedExerciseNames || "none"}</small>
@@ -236,11 +236,11 @@ function AdminManage() {
               </form>
             </section>
             <section className="op-card"><h2>Workout plans</h2>{workouts.map((item) => (
-              <article className="op-list-item" key={item.id}>
+              <article className="op-list-item" key={item._id}>
                 <div><strong>{item.title}</strong><p>{item.description}</p><small>{item.day_of_week} · {item.difficulty} · {item.estimated_minutes} min</small></div>
                 <div className="op-actions">
-                  <button className="btn btn-outline-dark btn-sm" onClick={() => { setWorkoutForm({ ...blankWorkout, ...item, exercise_ids: [] }); setEditing({ type: "workout", id: item.id }); }}>Edit</button>
-                  <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem("workout", item.id)}>Delete</button>
+                  <button className="btn btn-outline-dark btn-sm" onClick={() => { setWorkoutForm({ ...blankWorkout, ...item, exercise_ids: [] }); setEditing({ type: "workout", id: item._id }); }}>Edit</button>
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem("workout", item._id)}>Delete</button>
                 </div>
               </article>
             ))}</section>
@@ -267,11 +267,11 @@ function AdminManage() {
               </form>
             </section>
             <section className="op-card"><h2>Meals</h2>{meals.map((item) => (
-              <article className="op-list-item" key={item.id}>
+              <article className="op-list-item" key={item._id}>
                 <div><strong>{item.name}</strong><p>{item.ingredients}</p><small>{item.meal_type} · {item.diet_type} · {item.calories} kcal</small></div>
                 <div className="op-actions">
-                  <button className="btn btn-outline-dark btn-sm" onClick={() => { setMealForm({ ...blankMeal, ...item }); setEditing({ type: "meal", id: item.id }); }}>Edit</button>
-                  <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem("meal", item.id)}>Delete</button>
+                  <button className="btn btn-outline-dark btn-sm" onClick={() => { setMealForm({ ...blankMeal, ...item }); setEditing({ type: "meal", id: item._id }); }}>Edit</button>
+                  <button className="btn btn-outline-danger btn-sm" onClick={() => removeItem("meal", item._id)}>Delete</button>
                 </div>
               </article>
             ))}</section>
