@@ -1,4 +1,4 @@
-const { db } = require("../config/db");
+const { User, Exercise, Meal, ProgressTracking, AIChatHistory } = require("../models");
 const { calculateCalories, macrosFromCalories } = require("../services/metrics");
 
 function localCoachResponse(prompt, user) {
@@ -14,23 +14,21 @@ function localCoachResponse(prompt, user) {
 
 async function aiCoach(req, res) {
   const { prompt = "" } = req.body;
-  const [[user]] = await db.query("SELECT * FROM users WHERE id = ?", [req.user.userId]);
+  const user = await User.findById(req.user.userId).lean();
   const response = localCoachResponse(prompt, user);
-  await db.query("INSERT INTO ai_chat_history (user_id, prompt, response) VALUES (?, ?, ?)", [req.user.userId, prompt, response]);
+  await AIChatHistory.create({ user_id: req.user.userId, prompt, response });
   res.json({ response, provider: "local-rule-engine" });
 }
 
 async function chatHistory(req, res) {
-  const [rows] = await db.query(
-    "SELECT id, prompt, response, created_at FROM ai_chat_history WHERE user_id = ? ORDER BY created_at DESC LIMIT 25",
-    [req.user.userId]
-  );
+  const rows = await AIChatHistory.find({ user_id: req.user.userId })
+    .sort({ created_at: -1 }).limit(25).lean();
   res.json(rows);
 }
 
 async function generateWorkout(req, res) {
   const { difficulty = "beginner", days = 3 } = req.body;
-  const [exercises] = await db.query("SELECT * FROM exercise_library WHERE difficulty = ? LIMIT 8", [difficulty]);
+  const exercises = await Exercise.find({ difficulty }).limit(8).lean();
   const plan = Array.from({ length: Number(days) || 3 }, (_, index) => ({
     day: index + 1,
     title: `${difficulty} training day ${index + 1}`,
@@ -44,17 +42,15 @@ async function generateWorkout(req, res) {
 }
 
 async function generateMealPlan(req, res) {
-  const [[user]] = await db.query("SELECT * FROM users WHERE id = ?", [req.user.userId]);
+  const user = await User.findById(req.user.userId).lean();
   const calories = calculateCalories(user);
-  const [meals] = await db.query("SELECT * FROM meals ORDER BY ABS(calories - ?) LIMIT 4", [Math.round(calories / 4)]);
+  const meals = await Meal.find().sort({ calories: 1 }).limit(4).lean();
   res.json({ calories, macros: macrosFromCalories(calories, user.goal), meals });
 }
 
 async function progressInsights(req, res) {
-  const [entries] = await db.query(
-    "SELECT tracked_on, weight, waist, calories_burned FROM progress_tracking WHERE user_id = ? ORDER BY tracked_on DESC LIMIT 8",
-    [req.user.userId]
-  );
+  const entries = await ProgressTracking.find({ user_id: req.user.userId })
+    .sort({ tracked_on: -1 }).limit(8).lean();
   const latest = entries[0];
   const oldest = entries[entries.length - 1];
   const insights = [];
