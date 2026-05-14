@@ -1,5 +1,10 @@
 const { Exercise, Workout, UserWorkout, WorkoutLog } = require("../models");
 const { publicUploadPath } = require("../middleware/upload");
+const mongoose = require("mongoose");
+
+function isValidId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
+}
 
 function normalizeExercisePayload(body) {
   return {
@@ -27,6 +32,7 @@ async function listExercises(req, res) {
 }
 
 async function getExercise(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid exercise ID." });
   const exercise = await Exercise.findById(req.params.id).lean();
   if (!exercise) return res.status(404).json({ error: "Exercise not found." });
   res.json(exercise);
@@ -43,17 +49,20 @@ async function createExercise(req, res) {
 }
 
 async function updateExercise(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid exercise ID." });
   const payload = normalizeExercisePayload(req.body);
   await Exercise.findByIdAndUpdate(req.params.id, payload, { new: true });
   res.json({ message: "Exercise updated." });
 }
 
 async function deleteExercise(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid exercise ID." });
   await Exercise.findByIdAndDelete(req.params.id);
   res.json({ message: "Exercise deleted." });
 }
 
 async function uploadExerciseImage(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid exercise ID." });
   if (!req.file) return res.status(400).json({ error: "Exercise image is required." });
   const imageUrl = publicUploadPath(req.file);
   await Exercise.findByIdAndUpdate(req.params.id, { image_url: imageUrl });
@@ -79,6 +88,7 @@ async function listWorkouts(req, res) {
 }
 
 async function getWorkout(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid workout ID." });
   const workout = await Workout.findById(req.params.id).populate({
     path: "exercises.exercise_id",
     select: "name muscle_group difficulty equipment duration instructions youtube_url image_url calories_per_minute"
@@ -121,6 +131,7 @@ async function createWorkout(req, res) {
 }
 
 async function updateWorkout(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid workout ID." });
   const { title, description = "", difficulty = "beginner", muscle_group = "Full Body", day_of_week = null, estimated_minutes = 45, exercise_ids } = req.body;
   if (!title) return res.status(400).json({ error: "Workout title is required." });
 
@@ -136,6 +147,7 @@ async function updateWorkout(req, res) {
 }
 
 async function deleteWorkout(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid workout ID." });
   await Workout.findByIdAndDelete(req.params.id);
   res.json({ message: "Workout deleted." });
 }

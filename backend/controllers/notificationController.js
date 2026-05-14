@@ -1,4 +1,9 @@
 const { Notification } = require("../models");
+const mongoose = require("mongoose");
+
+function isValidId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
+}
 
 async function listNotifications(req, res) {
   const rows = await Notification.find({ user_id: req.user.userId }).sort({ createdAt: -1 }).lean();
@@ -27,6 +32,7 @@ async function createNotification(req, res) {
 }
 
 async function markRead(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid notification ID." });
   await Notification.updateOne({ _id: req.params.id, user_id: req.user.userId }, { is_read: true });
   res.json({ message: "Notification marked read." });
 }

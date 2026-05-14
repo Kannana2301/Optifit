@@ -1,5 +1,10 @@
 const { Progress } = require("../models");
 const { publicUploadPath } = require("../middleware/upload");
+const mongoose = require("mongoose");
+
+function isValidId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
+}
 
 async function listProgress(req, res) {
   const rows = await Progress.find({ user_id: req.user.userId })
@@ -33,6 +38,7 @@ async function addProgress(req, res) {
 }
 
 async function updateProgress(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid progress ID." });
   const { tracked_on, weight, chest, waist, hips, calories_burned, before_image, after_image, notes } = req.body;
   await Progress.updateOne(
     { _id: req.params.id, user_id: req.user.userId },
@@ -52,6 +58,7 @@ async function updateProgress(req, res) {
 }
 
 async function deleteProgress(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid progress ID." });
   await Progress.deleteOne({ _id: req.params.id, user_id: req.user.userId });
   res.json({ message: "Progress entry deleted." });
 }
@@ -60,6 +67,7 @@ async function uploadProgressImage(req, res) {
   const { progress_id, image_type = "after" } = req.body;
   if (!req.file) return res.status(400).json({ error: "Progress image is required." });
   if (!progress_id) return res.status(400).json({ error: "progress_id is required." });
+  if (!isValidId(progress_id)) return res.status(400).json({ error: "Invalid progress ID." });
 
   const column = image_type === "before" ? "before_image" : "after_image";
   const imagePath = publicUploadPath(req.file);

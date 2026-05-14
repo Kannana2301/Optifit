@@ -1,5 +1,10 @@
 const { Meal, MealPlan, User } = require("../models");
 const { calculateCalories, macrosFromCalories } = require("../services/metrics");
+const mongoose = require("mongoose");
+
+function isValidId(id) {
+  return mongoose.Types.ObjectId.isValid(id);
+}
 
 async function listMeals(req, res) {
   const { diet = "", meal_type = "", allergy = "" } = req.query;
@@ -19,6 +24,7 @@ async function listMeals(req, res) {
 }
 
 async function getMeal(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid meal ID." });
   const meal = await Meal.findById(req.params.id).lean();
   if (!meal) return res.status(404).json({ error: "Meal not found." });
   res.json(meal);
@@ -33,6 +39,7 @@ async function createMeal(req, res) {
 }
 
 async function updateMeal(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid meal ID." });
   const { name, meal_type = "breakfast", diet_type = "vegetarian", calories, protein = 0, carbs = 0, fat = 0, allergens = "", ingredients = "" } = req.body;
   if (!name || !calories) return res.status(400).json({ error: "Meal name and calories are required." });
 
@@ -41,6 +48,7 @@ async function updateMeal(req, res) {
 }
 
 async function deleteMeal(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid meal ID." });
   await Meal.findByIdAndDelete(req.params.id);
   res.json({ message: "Meal deleted." });
 }
@@ -94,6 +102,7 @@ async function listScheduledMeals(req, res) {
 }
 
 async function deleteScheduledMeal(req, res) {
+  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid scheduled meal ID." });
   await MealPlan.deleteOne({ _id: req.params.id, user_id: req.user.userId });
   res.json({ message: "Scheduled meal removed." });
 }
