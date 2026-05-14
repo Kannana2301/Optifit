@@ -1,39 +1,20 @@
 const { Notification } = require("../models");
-const mongoose = require("mongoose");
-
-function isValidId(id) {
-  return mongoose.Types.ObjectId.isValid(id);
-}
 
 async function listNotifications(req, res) {
-  const rows = await Notification.find({ user_id: req.user.userId }).sort({ createdAt: -1 }).lean();
-  rows.sort((a, b) => {
-    const aDate = a.remind_at || a.createdAt;
-    const bDate = b.remind_at || b.createdAt;
-    return bDate - aDate;
-  });
+  const rows = await Notification.find({ user_id: req.user.userId })
+    .sort({ remind_at: -1, created_at: -1 }).limit(50).lean();
   res.json(rows);
 }
 
 async function createNotification(req, res) {
   const { type, title, message, remind_at } = req.body;
   if (!type || !title) return res.status(400).json({ error: "type and title are required." });
-
-  const notification = await Notification.create({
-    user_id: req.user.userId,
-    type,
-    title,
-    message: message || null,
-    remind_at: remind_at ? new Date(remind_at) : null,
-    is_read: false
-  });
-
-  res.status(201).json({ id: notification._id, type, title, message, remind_at, is_read: false });
+  const doc = await Notification.create({ user_id: req.user.userId, type, title, message: message || null, remind_at: remind_at || null });
+  res.status(201).json(doc.toObject());
 }
 
 async function markRead(req, res) {
-  if (!isValidId(req.params.id)) return res.status(400).json({ error: "Invalid notification ID." });
-  await Notification.updateOne({ _id: req.params.id, user_id: req.user.userId }, { is_read: true });
+  await Notification.findOneAndUpdate({ _id: req.params.id, user_id: req.user.userId }, { $set: { is_read: true } });
   res.json({ message: "Notification marked read." });
 }
 

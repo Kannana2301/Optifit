@@ -4,12 +4,12 @@ const path = require("path");
 const cors = require("cors");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { User, DietPlan } = require("./models");
 const { connectDatabase } = require("./config/db");
 const { initializeSchema } = require("./database/schema");
 const { authenticate, SECRET_KEY } = require("./middleware/auth");
 const apiRoutes = require("./routes/apiRoutes");
 const { startReminderScheduler } = require("./services/reminderScheduler");
+const { User, DietPlan } = require("./models");
 
 const app = express();
 

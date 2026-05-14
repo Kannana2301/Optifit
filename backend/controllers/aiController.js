@@ -1,4 +1,4 @@
-const { User, AiChatHistory, Exercise, Meal, Progress } = require("../models");
+const { User, Exercise, Meal, ProgressTracking, AIChatHistory } = require("../models");
 const { calculateCalories, macrosFromCalories } = require("../services/metrics");
 
 function localCoachResponse(prompt, user) {
@@ -15,27 +15,20 @@ function localCoachResponse(prompt, user) {
 async function aiCoach(req, res) {
   const { prompt = "" } = req.body;
   const user = await User.findById(req.user.userId).lean();
-  if (!user) return res.status(404).json({ error: "User not found." });
-
   const response = localCoachResponse(prompt, user);
-  await AiChatHistory.create({ user_id: user._id, prompt, response });
+  await AIChatHistory.create({ user_id: req.user.userId, prompt, response });
   res.json({ response, provider: "local-rule-engine" });
 }
 
 async function chatHistory(req, res) {
-  const rows = await AiChatHistory.find({ user_id: req.user.userId })
-    .sort({ createdAt: -1 })
-    .limit(25)
-    .lean();
+  const rows = await AIChatHistory.find({ user_id: req.user.userId })
+    .sort({ created_at: -1 }).limit(25).lean();
   res.json(rows);
 }
 
 async function generateWorkout(req, res) {
   const { difficulty = "beginner", days = 3 } = req.body;
-  const exercises = await Exercise.find({ difficulty })
-    .limit(8)
-    .lean();
-
+  const exercises = await Exercise.find({ difficulty }).limit(8).lean();
   const plan = Array.from({ length: Number(days) || 3 }, (_, index) => ({
     day: index + 1,
     title: `${difficulty} training day ${index + 1}`,
@@ -45,48 +38,29 @@ async function generateWorkout(req, res) {
       reps: difficulty === "beginner" ? "10-12" : "8-12"
     }))
   }));
-
   res.json({ plan });
 }
 
 async function generateMealPlan(req, res) {
   const user = await User.findById(req.user.userId).lean();
-  if (!user) return res.status(404).json({ error: "User not found." });
-
   const calories = calculateCalories(user);
-  const target = Math.round(calories / 4);
-  const meals = await Meal.aggregate([
-    {
-      $addFields: {
-        diff: { $abs: { $subtract: ["$calories", target] } }
-      }
-    },
-    { $sort: { diff: 1 } },
-    { $limit: 4 }
-  ]);
-
+  const meals = await Meal.find().sort({ calories: 1 }).limit(4).lean();
   res.json({ calories, macros: macrosFromCalories(calories, user.goal), meals });
 }
 
 async function progressInsights(req, res) {
-  const entries = await Progress.find({ user_id: req.user.userId })
-    .sort({ tracked_on: -1 })
-    .limit(8)
-    .lean();
-
+  const entries = await ProgressTracking.find({ user_id: req.user.userId })
+    .sort({ tracked_on: -1 }).limit(8).lean();
   const latest = entries[0];
   const oldest = entries[entries.length - 1];
   const insights = [];
-
-  if (latest && oldest && latest.weight != null && oldest.weight != null) {
+  if (latest && oldest && latest.weight && oldest.weight) {
     const change = Number((latest.weight - oldest.weight).toFixed(1));
     insights.push(change < 0 ? `You are down ${Math.abs(change)} kg across recent logs.` : `You are up ${change} kg across recent logs.`);
   }
-
   const burn = entries.reduce((sum, item) => sum + Number(item.calories_burned || 0), 0);
   insights.push(`Recent logged calorie burn totals ${burn} kcal.`);
   insights.push("Keep measurements on the same weekday and time of day for cleaner trend analysis.");
-
   res.json({ insights, entries });
 }
 
