@@ -1,32 +1,52 @@
-const { db } = require("../config/db");
+const { User, WorkoutLog, Notification } = require("../models");
+
+function getTodayStart() {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return today;
+}
+
+function getReminderTime(hour) {
+  const date = new Date();
+  date.setHours(hour, 0, 0, 0);
+  date.setMilliseconds(0);
+  return date;
+}
 
 async function createDailyReminder(userId, type, title, message, hour) {
-  const [existing] = await db.query(
-    `SELECT id FROM notifications
-     WHERE user_id = ? AND type = ? AND title = ? AND DATE(COALESCE(remind_at, created_at)) = CURDATE()
-     LIMIT 1`,
-    [userId, type, title]
-  );
-  if (existing.length) return;
+  const existing = await Notification.findOne({
+    user_id: userId,
+    type,
+    title,
+    createdAt: { $gte: getTodayStart() }
+  });
 
-  await db.query(
-    "INSERT INTO notifications (user_id, type, title, message, remind_at) VALUES (?, ?, ?, ?, TIMESTAMP(CURDATE(), MAKETIME(?, 0, 0)))",
-    [userId, type, title, message, hour]
-  );
+  if (existing) return;
+
+  await Notification.create({
+    user_id: userId,
+    type,
+    title,
+    message,
+    remind_at: getReminderTime(hour)
+  });
 }
 
 async function runReminderSweep() {
-  const [users] = await db.query("SELECT id, goal FROM users LIMIT 500");
-  for (const user of users) {
-    await createDailyReminder(user.id, "water", "Hydration check", "Log your water intake for today.", 10);
-    await createDailyReminder(user.id, "meal", "Meal plan review", "Review and schedule your meals for the day.", 8);
+  const users = await User.find().limit(500).lean();
+  const todayStart = getTodayStart();
 
-    const [workouts] = await db.query(
-      "SELECT id FROM workout_logs WHERE user_id = ? AND DATE(completed_at) = CURDATE() LIMIT 1",
-      [user.id]
-    );
-    if (!workouts.length) {
-      await createDailyReminder(user.id, "workout", "Training reminder", "Complete a planned workout or log an active recovery session.", 18);
+  for (const user of users) {
+    await createDailyReminder(user._id, "water", "Hydration check", "Log your water intake for today.", 10);
+    await createDailyReminder(user._id, "meal", "Meal plan review", "Review and schedule your meals for the day.", 8);
+
+    const hasWorkoutToday = await WorkoutLog.exists({
+      user_id: user._id,
+      completed_at: { $gte: todayStart }
+    });
+
+    if (!hasWorkoutToday) {
+      await createDailyReminder(user._id, "workout", "Training reminder", "Complete a planned workout or log an active recovery session.", 18);
     }
   }
 }

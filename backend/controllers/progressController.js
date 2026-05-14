@@ -1,38 +1,58 @@
-const { db } = require("../config/db");
+const { Progress } = require("../models");
 const { publicUploadPath } = require("../middleware/upload");
 
 async function listProgress(req, res) {
-  const [rows] = await db.query(
-    "SELECT * FROM progress_tracking WHERE user_id = ? ORDER BY tracked_on DESC LIMIT 30",
-    [req.user.userId]
-  );
+  const rows = await Progress.find({ user_id: req.user.userId })
+    .sort({ tracked_on: -1 })
+    .lean();
   res.json(rows);
 }
 
 async function addProgress(req, res) {
   const { tracked_on, weight, chest, waist, hips, calories_burned, before_image, after_image, notes } = req.body;
   if (!tracked_on) return res.status(400).json({ error: "tracked_on date is required." });
-  await db.query(
-    `INSERT INTO progress_tracking (user_id, tracked_on, weight, chest, waist, hips, calories_burned, before_image, after_image, notes)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-     ON DUPLICATE KEY UPDATE weight = VALUES(weight), chest = VALUES(chest), waist = VALUES(waist), hips = VALUES(hips), calories_burned = VALUES(calories_burned), before_image = VALUES(before_image), after_image = VALUES(after_image), notes = VALUES(notes)`,
-    [req.user.userId, tracked_on, weight || null, chest || null, waist || null, hips || null, calories_burned || 0, before_image || null, after_image || null, notes || null]
+
+  await Progress.findOneAndUpdate(
+    { user_id: req.user.userId, tracked_on },
+    {
+      user_id: req.user.userId,
+      tracked_on,
+      weight: weight || null,
+      chest: chest || null,
+      waist: waist || null,
+      hips: hips || null,
+      calories_burned: calories_burned || 0,
+      before_image: before_image || null,
+      after_image: after_image || null,
+      notes: notes || null
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
   );
+
   res.status(201).json({ message: "Progress saved." });
 }
 
 async function updateProgress(req, res) {
   const { tracked_on, weight, chest, waist, hips, calories_burned, before_image, after_image, notes } = req.body;
-  await db.query(
-    `UPDATE progress_tracking SET tracked_on = COALESCE(?, tracked_on), weight = ?, chest = ?, waist = ?, hips = ?, calories_burned = ?, before_image = COALESCE(?, before_image), after_image = COALESCE(?, after_image), notes = ?
-     WHERE id = ? AND user_id = ?`,
-    [tracked_on || null, weight || null, chest || null, waist || null, hips || null, calories_burned || 0, before_image || null, after_image || null, notes || null, req.params.id, req.user.userId]
+  await Progress.updateOne(
+    { _id: req.params.id, user_id: req.user.userId },
+    {
+      ...(tracked_on != null ? { tracked_on } : {}),
+      weight: weight || null,
+      chest: chest || null,
+      waist: waist || null,
+      hips: hips || null,
+      calories_burned: calories_burned || 0,
+      before_image: before_image || null,
+      after_image: after_image || null,
+      notes: notes || null
+    }
   );
   res.json({ message: "Progress updated." });
 }
 
 async function deleteProgress(req, res) {
-  await db.query("DELETE FROM progress_tracking WHERE id = ? AND user_id = ?", [req.params.id, req.user.userId]);
+  await Progress.deleteOne({ _id: req.params.id, user_id: req.user.userId });
   res.json({ message: "Progress entry deleted." });
 }
 
@@ -43,25 +63,35 @@ async function uploadProgressImage(req, res) {
 
   const column = image_type === "before" ? "before_image" : "after_image";
   const imagePath = publicUploadPath(req.file);
-  await db.query(`UPDATE progress_tracking SET ${column} = ? WHERE id = ? AND user_id = ?`, [imagePath, progress_id, req.user.userId]);
+
+  await Progress.updateOne(
+    { _id: progress_id, user_id: req.user.userId },
+    { [column]: imagePath }
+  );
+
   res.json({ message: "Progress image uploaded.", image_url: imagePath });
 }
 
 async function progressAnalytics(req, res) {
-  const [rows] = await db.query(
-    `SELECT tracked_on, weight, waist, calories_burned
-     FROM progress_tracking
-     WHERE user_id = ? AND tracked_on >= DATE_SUB(CURDATE(), INTERVAL 12 WEEK)
-     ORDER BY tracked_on`,
-    [req.user.userId]
-  );
+  const boundaryDate = new Date();
+  boundaryDate.setDate(boundaryDate.getDate() - 84);
+  const dateKey = boundaryDate.toISOString().slice(0, 10);
+
+  const rows = await Progress.find({
+    user_id: req.user.userId,
+    tracked_on: { $gte: dateKey }
+  })
+    .sort({ tracked_on: 1 })
+    .lean();
+
   const first = rows[0] || {};
   const last = rows[rows.length - 1] || {};
+
   res.json({
     entries: rows,
     summary: {
-      weightChange: first.weight && last.weight ? Number((last.weight - first.weight).toFixed(1)) : 0,
-      waistChange: first.waist && last.waist ? Number((last.waist - first.waist).toFixed(1)) : 0,
+      weightChange: first.weight != null && last.weight != null ? Number((last.weight - first.weight).toFixed(1)) : 0,
+      waistChange: first.waist != null && last.waist != null ? Number((last.waist - first.waist).toFixed(1)) : 0,
       caloriesBurned: rows.reduce((sum, row) => sum + Number(row.calories_burned || 0), 0)
     }
   });
