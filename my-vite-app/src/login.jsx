@@ -56,20 +56,20 @@ function Login() {
   };
 
   return (
-    <div className="bg-light min-vh-100 d-flex align-items-center">
+    <div
+      className="min-vh-100 d-flex align-items-center"
+      style={{
+        background: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920&q=80') center/cover fixed`,
+      }}
+    >
       <div className="container py-5">
         <div className="row justify-content-center">
           <div className="col-lg-5 col-md-7">
-            <div className="card border-0 shadow-sm rounded-3">
+            <div className="card border-0 shadow-sm rounded-3" style={{ backdropFilter: "blur(12px)", background: "rgba(255,255,255,0.92)" }}>
               <div className="card-body p-5">
-                <div className="text-center mb-4 flex flex-column align-items-center">
-                  <img 
-                    src={logoSvg}
-                    alt="My Diet Meal Plan Logo" 
-                    className="mb-3"
-                    style={{ height: "50px" }}
-                  />
-                  <p className="text-5xl fw-bold text-success">Optifit</p>
+                <div className="text-center mb-4">
+                  <img src={logoSvg} alt="OptiFit Logo" style={{ height: "50px" }} className="mb-3" />
+                  <p className="fw-bold text-success" style={{ fontSize: "3.2rem" }}>Optifit</p>
                   <h2 className="fw-bold text-success">Welcome Back</h2>
                   <p className="text-secondary">Login to your account</p>
                 </div>
