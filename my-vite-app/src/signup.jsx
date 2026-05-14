@@ -32,8 +32,8 @@ function Signup() {
     if (!formData.password) newErrors.password = 'Password is required';
     if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
     if (!formData.phone) newErrors.phone = 'Phone number is required';
-    if (!formData.height) newErrors.height = 'Height is required';
-    if (!formData.weight) newErrors.weight = 'Weight is required';
+    if (!formData.height || isNaN(parseFloat(formData.height)) || parseFloat(formData.height) <= 0) newErrors.height = 'Height is required';
+    if (!formData.weight || isNaN(parseFloat(formData.weight)) || parseFloat(formData.weight) <= 0) newErrors.weight = 'Weight is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -56,6 +56,8 @@ function Signup() {
         setSubmitStatus('success');
         // Optional: Redirect to login or dashboard
       } catch (error) {
+        const message = error.response?.data?.error || error.message || 'Signup failed. Please try again.';
+        setErrors({ form: message });
         setSubmitStatus('error');
       }
     }
@@ -84,9 +86,9 @@ function Signup() {
                   </div>
                 )}
                 
-                {submitStatus === 'error' && (
+                {submitStatus === 'error' && errors.form && (
                   <div className="alert alert-danger">
-                    Signup failed. Please try again.
+                    {errors.form}
                   </div>
                 )}
                 
